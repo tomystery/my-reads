@@ -14,7 +14,10 @@ class SearchPage extends Component {
 
     updateQuery = (query) => {
         this.setState({ query: query.trim() });
-        this.searchBook(query);
+        if (query.trim().length > 0) {
+            this.searchBook(query);
+        }
+
     }
     searchBook = (query) => {
         BooksAPI.search(query).then((books) => {
@@ -28,18 +31,19 @@ class SearchPage extends Component {
     }
 
     render() {
-        if(this.state.searchBooks){
-            this.state.searchBooks.map((searchbook)=>{
-                this.props.books.map((book)=>{
-                    if(searchbook.id===book.id){
-                        searchbook.shelf=book.shelf
-                        return searchbook
-                    }
+        if (this.state.searchBooks) {
+            this.state.searchBooks.map((searchbook) => {
+                searchbook.shelf='none';
+                this.props.books.map((book) => {
+                    if (searchbook.id === book.id) {
+                        searchbook.shelf = book.shelf
+
+                    } 
+                    
                 })
 
             })
         }
-
 
 
         return (
